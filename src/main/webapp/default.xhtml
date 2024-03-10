@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+<h:head>
+<!--   <h:outputStylesheet library="webjars."/>-->
+   <h:outputStylesheet name="webjars/bootstrap/5.3.0/css/bootstrap.min-jsf.css"/>
+
+</h:head>
+<h:body>
+   <h1>Book Management</h1>
+   <h:form>
+      <h:dataTable value="#{order.bookList}" var="o" styleClass="table table-striped">
+         <h:column>
+            <f:facet name="header">id</f:facet>
+            <h:outputText value="#{o.id}" />
+         </h:column>
+
+         <h:column>
+
+            <f:facet name="header">book</f:facet>
+            <h:inputText value="#{o.bookName}" size="10" rendered="#{o.editable}" id="edit-name" required="true" validatorMessage="name should not be empty ">
+            </h:inputText>
+            <h:message for="edit-name" styleClass="text-danger"></h:message>
+
+            <h:outputText value="#{o.bookName}" rendered="#{not o.editable}" />
+
+         </h:column>
+
+         <h:column>
+
+            <f:facet name="header">email</f:facet>
+            <h:inputText value="#{o.email}" size="10" rendered="#{o.editable}" id="edit-mail" required="true">
+            </h:inputText>
+            <h:message for="edit-mail" styleClass="text-danger"></h:message>
+
+            <h:outputText value="#{o.email}" rendered="#{not o.editable}" />
+
+         </h:column>
+
+         <h:column>
+
+            <f:facet name="header">price</f:facet>
+            <h:inputText id="price-edited" value="#{o.prix}" size="10" rendered="#{o.editable}" required="true">
+
+               <f:validateDoubleRange minimum="1"></f:validateDoubleRange>
+            </h:inputText>
+            <h:message for="price-edited" styleClass="text-danger"></h:message>
+
+            <h:outputText value="#{o.prix}" rendered="#{not o.editable}" />
+            <h:outputText value="$"/>
+
+         </h:column>
+
+         <h:column>
+
+            <f:facet name="header">Action</f:facet>
+            <h:commandLink value="Edit" action="#{order.editAction(o)}" rendered="#{not o.editable}" styleClass="btn btn-success" />
+
+         </h:column>
+
+         <h:column>
+
+            <f:facet name="header">Action</f:facet>
+            <h:commandLink value="Delete" action="#{order.deleteAction(o)}" styleClass="btn btn-danger" />
+
+         </h:column>
+
+      </h:dataTable>
+      <h:commandButton value="Save Changes" action="#{order.saveAction}" styleClass="btn btn-danger"/>
+
+      <h3>Add a Book</h3>
+      <h:panelGroup rendered="#{bookBean.renderAddtable}" styleClass="container my-4">
+         <table class="table">
+            <tr>
+               <td class="col-sm-3">Book Name :</td>
+               <td class="col-sm-9"><h:inputText size="20" value="#{order.bookName}" id="name" required="true"  validatorMessage="name should not be empty " styleClass="form-control">
+
+               </h:inputText>
+                  <h:message for="name" styleClass="text-danger"></h:message>
+               </td>
+            </tr>
+            <tr>
+               <td>Email:</td>
+               <td><h:inputText size="5" value="#{order.email}" id="email" styleClass="form-control" required="true">
+                  <f:validateRegex pattern="^[A-Za-z]+@gmail\.com$"></f:validateRegex>
+               </h:inputText>
+                  <h:message for="email" styleClass="text-danger"></h:message>
+               </td>
+            </tr>
+            <tr>
+               <td>Price :</td>
+               <td><h:inputText size="10" value="#{order.prix}" id="price" styleClass="form-control" >
+                  <f:validateDoubleRange minimum="1"></f:validateDoubleRange>
+               </h:inputText>
+                  <h:message for="price" styleClass="text-danger"></h:message>
+               </td>
+            </tr>
+         </table>
+      </h:panelGroup>
+
+      <h:commandButton value="Add" action="#{order.addAction}" rendered="#{order.renderAddtable}" styleClass="btn btn-success" />
+      <h:commandButton value="Add" action="#{order.renderAction()}" rendered="#{not order.renderAddtable}" styleClass="btn btn-danger"/>
+
+   </h:form>
+   <h:form>
+   <h:commandButton value="Cancel" action="#{order.renderAction()}" rendered="#{order.renderAddtable}" styleClass="btn btn-danger"/>
+   </h:form>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</h:body>
+</html>
