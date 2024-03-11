@@ -35,8 +35,9 @@
 
             <f:facet name="header">email</f:facet>
             <h:inputText value="#{o.email}" size="10" rendered="#{o.editable}" id="edit-mail" required="true">
+               <f:validateRegex pattern="^[A-Za-z]+@gmail\.com$"> </f:validateRegex>
             </h:inputText>
-            <f:validateRegex pattern="^[A-Za-z]+@gmail\.com$"> </f:validateRegex>
+
             <h:message for="edit-mail" styleClass="text-danger"></h:message>
 
             <h:outputText value="#{o.email}" rendered="#{not o.editable}" />
